@@ -11,6 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+//Este código retorna el dato nombre al iniciar sesión
   async validate(payload: any) {
     return { userId: payload.sub, name: payload.username };
   }
