@@ -66,8 +66,12 @@ export class UsersService {
       });
       return'Se actualizo correctamente' ;
     }
+
     // Agregar Delete
-
-  
-
+    async deleteUser(id: string) {
+      await this.prismaService.user.delete({
+        where: { id },
+    });
+    return "Eliminación exitosa";
+  }
 }
