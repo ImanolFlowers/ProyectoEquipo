@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'generated/prisma';
 import {CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/core/databases/prisma.service';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class UsersService {
@@ -49,8 +50,23 @@ export class UsersService {
         });
     }
 
-    // falta agregar update y delete
-    // importar el update dto
+
+    async updateUser(userId: string, updateData: UpdateUserDto) {
+      // Si actualizas la contraseña, deberías hashearla aquí:
+      if (updateData.password) {
+        updateData.password = await bcrypt.hash(updateData.password, 12);
+      }
+
+      await this.prismaService.user.update({
+        where: { id: userId },
+        data: {
+          ...updateData,
+          updateAt: new Date(),
+        },
+      });
+      return'Se actualizo correctamente' ;
+    }
+    // Agregar Delete
 
   
 
