@@ -1,20 +1,14 @@
 import { Controller, Patch, Body, Param, UseGuards, Request, UnauthorizedException, Put, Get, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Public } from 'src/core/decorators/public.decorators';
+// Este me hace meter llaves de autorizacion
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { Public } from 'src/core/decorators/public.decorators';
 
 
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
-  @Public()
-  @Get()
-  async getAllUsers() {
-    return this.usersService.findAll();
-  }
-
 
   @Public()
   @Put(':id')
@@ -26,7 +20,13 @@ export class UsersController {
     return this.usersService.updateUser(id, updateUserDto);
   }
 
-  //Agregar Delete
+  @Public()
+  @Get()
+  async getAllUsers() {
+    return this.usersService.findAll();
+  }
+
+
   @Public()
   // @UseGuards(JwtAuthGuard)
   @Delete(':id')
@@ -38,8 +38,8 @@ export class UsersController {
     // if (req.user.userId !== id) {
     //   throw new UnauthorizedException('No puedes eliminar otro usuario');
     // }
+
     return this.usersService.deleteUser(id);
   }
-
 }
 
