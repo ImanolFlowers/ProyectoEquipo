@@ -1,6 +1,8 @@
+
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
@@ -11,8 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-//Este código retorna el dato nombre al iniciar sesión
   async validate(payload: any) {
-    return { userId: payload.sub, name: payload.username };
+    return { userId: payload.sub, username: payload.username };
   }
 }
