@@ -14,15 +14,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/*
+atravez del schema gestionaremos
+la estructura de la base de datos
+por cada cambio que queramos aplicar
+a la nase de datos, se debe generar una
+Migracion y aplicarla a la base de datos en el servidor
+*/
 
-
+// un modelo, es una tabla en la base de datos
 model User{
-  // el cuid genera una cadena larga 
+  // el crud genera una cadena larga 
   id String @id @default(cuid())
   name String
   username String @unique
   email String @unique
+  image String?
+  telefono String? 
   password String
+  apellido String?
   active Boolean @default(true)
 
   // timestamps
@@ -30,4 +40,11 @@ model User{
   createAt DateTime @default(now())
   updateAt DateTime?
 
+}
+
+model Temporada {
+  id        String   @id @default(cuid()) 
+  nombre    String                         
+  activa    Boolean  @default(true)
+  createdAt DateTime @default(now())
 }
