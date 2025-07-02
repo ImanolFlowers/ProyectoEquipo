@@ -2,12 +2,18 @@ import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from 'generated/prisma';
 import {CreateUserDto } from './dto/create-user.dto';
-import { PrismaService } from 'src/core/databases/prisma.service';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { PrismaService } from 'src/core/databases/prisma.service';
 
 @Injectable()
 export class UsersService {
+    //constructor que reciba instancia de PrismaService
     constructor(private prismaService: PrismaService) {}
+        
+
+
+
+        // ACTUALIZADO
 
         async findAll() {
   return this.prismaService.user.findMany({
@@ -26,7 +32,11 @@ export class UsersService {
   });
 }
         
+    // se agrega
+    //metodo para registrar usuario y buscar usuario
+
     async createUser(userData: CreateUserDto){
+        //  ifrar la contraseña 
         const hash = await bcrypt.hash(userData.password, 12)
 
         const user= await this.prismaService.user.create({
@@ -37,20 +47,15 @@ export class UsersService {
             }
         });
 
+        // devolver lo datos basicos del usuario
         const {id, name, apellido, email, username, telefono, image} = user
+        //retornamos el registro del usuario 
         return {id, name, apellido, email, username, telefono, image}
 
     }
 
-    async findByUserName(username: string): Promise<User | null>{
-        return this.prismaService.user.findUnique({
-            where:{
-                username: username,
-            }
-        });
-    }
 
-
+    // Actualizar el usuario
     async updateUser(userId: string, updateData: UpdateUserDto) {
       // Si actualizas la contraseña, deberías hashearla aquí:
       if (updateData.password) {
@@ -65,13 +70,29 @@ export class UsersService {
         },
       });
       return'Se actualizo correctamente' ;
+}
+
+
+    async findByUserName(username: string): Promise<User | null>{
+        //buscar un registro donde el username sea el valor 
+        //recibido eb el parametro username
+        return this.prismaService.user.findUnique({
+            where:{
+                username: username,
+            }
+        });
     }
 
-    // Agregar Delete
-    async deleteUser(id: string) {
-      await this.prismaService.user.delete({
-        where: { id },
-    });
-    return "Eliminación exitosa";
-  }
+    
+
+  async deleteUser(id: string) {
+  await this.prismaService.user.delete({
+    where: { id },
+  });
+
+  return "Eliminación exitosa";
+}
+
+
+
 }
