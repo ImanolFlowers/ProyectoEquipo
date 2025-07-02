@@ -1,6 +1,7 @@
 import { Controller, Patch, Body, Param, UseGuards, Request, UnauthorizedException, Put, Get, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Public } from 'src/core/decorators/public.decorators';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 
 
@@ -17,9 +18,17 @@ export class UsersController {
   }
 
 
-  // agregar el put y delete 
-  // tambien importarlo ul update dto
+  @Public()
+  @Put(':id')
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Request() req,
+  ) {
+    return this.usersService.updateUser(id, updateUserDto);
+  }
 
+  //Agregar Delete
 
 
 }
