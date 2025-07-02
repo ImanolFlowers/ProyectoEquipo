@@ -9,8 +9,6 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  
-
   @Public()
   @Get()
   async getAllUsers() {
@@ -29,7 +27,19 @@ export class UsersController {
   }
 
   //Agregar Delete
-
+  @Public()
+  // @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async deleteUser(
+    @Param('id') id: string,
+    @Request() req,
+  ) {
+    // Opcional: valida que solo el usuario pueda eliminar su propio perfil
+    // if (req.user.userId !== id) {
+    //   throw new UnauthorizedException('No puedes eliminar otro usuario');
+    // }
+    return this.usersService.deleteUser(id);
+  }
 
 }
 
