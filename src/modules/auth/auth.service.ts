@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UsersService } from '../users/users.service';
 
 
 @Injectable()
@@ -12,6 +12,8 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
+
+  // ACTUALIZADO
   // metodo para registrar usuario
   async createUser(userData: CreateUserDto){
     return this.usersService.createUser(userData)
@@ -20,31 +22,30 @@ export class AuthService {
     async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findByUserName(username);
     // debemos validar la contrase;a que debe estar cifrada
-
-    // si no existe usuario debe crear una excepcion
     if(!user){
       throw new UnauthorizedException()
     }
 
 
-    // validar la contraseña que debe estar cifrada
+    // valida la contrase;a cifrada, sino manda la ecepcion
     const isMatch = await bcrypt.compare(pass, user.password);
-
-    // sino coincide, crea excepcion
     if (!isMatch) {
       throw new UnauthorizedException();
     }
+
+    // HASTA AQUI
+
 
     const { password, ...result } = user;
     return result;
   }
 
-  // metodo que genera el  JWT
+  // metodo que genera el  jwt
   async login(user: any) {
-    // objeto que ira en el JWT
-    const payload = { username: user.username, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }
+  const payload = { username: user.username, sub: user.id, role: user.role };
+  return {
+    access_token: this.jwtService.sign(payload),
+  };
+}
+
 }

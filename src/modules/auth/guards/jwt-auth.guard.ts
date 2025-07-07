@@ -5,7 +5,6 @@ import { IS_PUBLIC_KEY } from 'src/core/decorators/public.decorators';
 
 
 
-
 // ACTUALIZACION
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
