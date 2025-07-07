@@ -35,6 +35,7 @@ export class UsersController {
     throw new UnauthorizedException('No está permitido cambiar el rol del usuario');
   }
 
+  
     return this.usersService.updateUser(id, updateUserDto);
   }
 
