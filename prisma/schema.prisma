@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -14,37 +8,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/*
-atravez del schema gestionaremos
-la estructura de la base de datos
-por cada cambio que queramos aplicar
-a la nase de datos, se debe generar una
-Migracion y aplicarla a la base de datos en el servidor
-*/
 
-// un modelo, es una tabla en la base de datos
-model User{
-  // el crud genera una cadena larga 
-  id String @id @default(cuid())
-  name String
-  username String @unique
-  email String @unique
-  image String?
-  telefono String? 
+enum user_role {
+  ARBITRO
+  ENTRENADOR
+  VISITANTE
+}
+
+
+model user {
+  id       String    @id
+  name     String
+  username String    @unique(map: "User_username_key")
+  email    String    @unique(map: "User_email_key")
+  image    String?
   password String
-  apellido String?
-  active Boolean @default(true)
-
-  // timestamps
-  // cuando fue creado y actualizacion
-  createAt DateTime @default(now())
+  active   Boolean   @default(true)
+  createAt DateTime  @default(now())
   updateAt DateTime?
+  telefono String?
+  apellido String?
+  role     user_role @default(VISITANTE)
 
+    // equipos  Equipo[]  @relation("EntrenadorEquipos")
 }
 
-model Temporada {
-  id        String   @id @default(cuid()) 
-  nombre    String                         
-  activa    Boolean  @default(true)
+model temporada {
+  id        String   @id
+  nombre    String
   createdAt DateTime @default(now())
+  updatedAt DateTime
+  activa    Boolean  @default(true)
 }
+
+
+// model Equipo {
+//   id           String   @id @default(cuid())
+//   nombre       String
+//   escudo       String?
+//   localidad    String?
+//   entrenadorId String
+//   entrenador   user     @relation("EntrenadorEquipos", fields: [entrenadorId], references: [id])
+
+//   active       Boolean  @default(true)
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime?
+// }
