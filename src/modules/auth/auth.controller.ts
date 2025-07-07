@@ -2,8 +2,7 @@ import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
 import { LocalAuthGuard } from './guards/auth/local-auth.guard';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { Public } from 'src/core/decorators/public.decorators';
-
+import { Public } from 'src/core/decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -27,7 +26,7 @@ export class AuthController {
   @Public()
   @Post('login')
   signIn(@Request() req) {
-    // evolver el JWT Del usuario autenticado
+    // me envuelve el jwt autenticado
     return this.authService.login(req.user);
   }
 

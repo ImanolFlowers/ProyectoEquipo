@@ -1,10 +1,33 @@
-// agregar update
+import { IsEmail, IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
+import { Role } from './create-user.dto';
+
 export class UpdateUserDto {
-    email: string;
-    username: string;
-    name: string;
-    image?: string;
-    password: string;
-    telefono?: string;
-    apellido?: string;
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  apellido?: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(6)
+  password?: string;
+
+  @IsOptional()
+  @IsEmail()
+  email?: string;
+
+  @IsOptional()
+  @IsString()
+  username?: string;
+
+  @IsOptional()
+  @IsString()
+  telefono?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
 }
