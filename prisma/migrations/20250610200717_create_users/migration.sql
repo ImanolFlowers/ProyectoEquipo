@@ -4,6 +4,7 @@ CREATE TABLE `User` (
     `name` VARCHAR(191) NOT NULL,
     `username` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
+    `image` VARCHAR(191) NULL,
     `password` VARCHAR(191) NOT NULL,
     `active` BOOLEAN NOT NULL DEFAULT true,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

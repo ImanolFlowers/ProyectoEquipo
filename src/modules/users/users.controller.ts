@@ -4,7 +4,8 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/core/guards/roles.guard';
 import { Roles } from 'src/core/decorators/roles.decorator';
-import { Role } from 'generated/prisma';
+import { Role } from './dto/create-user.dto';
+
 
 
 @Controller('users')
@@ -35,7 +36,6 @@ export class UsersController {
     throw new UnauthorizedException('No está permitido cambiar el rol del usuario');
   }
 
-  
     return this.usersService.updateUser(id, updateUserDto);
   }
 
