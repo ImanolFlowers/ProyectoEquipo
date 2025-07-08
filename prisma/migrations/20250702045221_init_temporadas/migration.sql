@@ -1,8 +1,3 @@
--- AlterTable
-ALTER TABLE `user` ADD COLUMN `apellido` VARCHAR(191) NULL,
-    ADD COLUMN `image` VARCHAR(191) NULL,
-    ADD COLUMN `telefono` VARCHAR(191) NULL;
-
 -- CreateTable
 CREATE TABLE `Temporada` (
     `id` VARCHAR(191) NOT NULL,

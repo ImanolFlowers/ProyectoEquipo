@@ -9,15 +9,15 @@ datasource db {
 }
 
 
-enum user_role {
+enum Role {
   ARBITRO
   ENTRENADOR
   VISITANTE
 }
 
 
-model user {
-  id       String    @id
+model User {
+  id       String  @id @default(cuid())
   name     String
   username String    @unique(map: "User_username_key")
   email    String    @unique(map: "User_email_key")
@@ -28,16 +28,16 @@ model user {
   updateAt DateTime?
   telefono String?
   apellido String?
-  role     user_role @default(VISITANTE)
+  role     Role @default(VISITANTE)
 
     // equipos  Equipo[]  @relation("EntrenadorEquipos")
 }
 
-model temporada {
-  id        String   @id
+model Temporada {
+  id        String   @id @default(cuid())
   nombre    String
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt 
   activa    Boolean  @default(true)
 }
 
@@ -48,7 +48,7 @@ model temporada {
 //   escudo       String?
 //   localidad    String?
 //   entrenadorId String
-//   entrenador   user     @relation("EntrenadorEquipos", fields: [entrenadorId], references: [id])
+//   entrenador   User     @relation("EntrenadorEquipos", fields: [entrenadorId], references: [id])
 
 //   active       Boolean  @default(true)
 //   createdAt    DateTime @default(now())
