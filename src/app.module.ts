@@ -5,15 +5,15 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { CatsModule } from './modules/cats/cats.module';
 import { TemporadasModule } from './modules/temporadas/temporadas.module';
+import { EquiposModule } from './modules/equipos/equipos.module';
 
 
 
 
 // Actualizacion
 @Module({
-  imports: [CatsModule, AuthModule, UsersModule, TemporadasModule],
+  imports: [AuthModule, UsersModule, TemporadasModule, EquiposModule],
   controllers: [AppController],
   providers: [
     AppService,

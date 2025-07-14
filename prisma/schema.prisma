@@ -30,7 +30,7 @@ model User {
   apellido String?
   role     Role @default(VISITANTE)
 
-    // equipos  Equipo[]  @relation("EntrenadorEquipos")
+    equipos  Equipo[] 
 }
 
 model Temporada {
@@ -42,15 +42,41 @@ model Temporada {
 }
 
 
-// model Equipo {
-//   id           String   @id @default(cuid())
-//   nombre       String
-//   escudo       String?
-//   localidad    String?
-//   entrenadorId String
-//   entrenador   User     @relation("EntrenadorEquipos", fields: [entrenadorId], references: [id])
+model Equipo {
+  id           String   @id @default(cuid())
+  nombre       String
+  escudo       String?
+  localidad    String?
+  entrenadorId String
+  entrenador   User     @relation(fields: [entrenadorId], references: [id], onDelete: Cascade)
 
-//   active       Boolean  @default(true)
-//   createdAt    DateTime @default(now())
-//   updatedAt    DateTime?
+
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime?
+
+  // jugadores Jugadores[]
+}
+
+
+// enum Posicion {
+//   PORTERO
+//   DEFENSA
+//   MEDIO
+//   DELANTERO
+// }
+
+// model Jugadores {
+//   id         String    @id @default(cuid())
+//   nombre     String
+//   apellidos  String
+//   numero     Int
+//   posicion   Posicion
+//   foto       String?
+
+//   equipo     Equipo    @relation(fields: [equipoId], references: [id])
+//   equipoId   String
+
+//   createdAt  DateTime  @default(now())
+//   updatedAt  DateTime  @updatedAt
 // }
