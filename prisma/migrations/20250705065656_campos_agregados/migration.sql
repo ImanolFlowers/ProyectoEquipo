@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `temporada` MODIFY `updatedAt` DATETIME(3) NULL;
+ALTER TABLE `Temporada` MODIFY `updatedAt` DATETIME(3) NULL;

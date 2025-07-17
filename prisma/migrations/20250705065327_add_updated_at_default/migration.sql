@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE `temporada` 
+ALTER TABLE `Temporada` 
   DROP COLUMN `activa`,
   ADD COLUMN `estado` VARCHAR(191) NOT NULL DEFAULT 'activa',
   ADD COLUMN `fin` DATETIME(3) NULL,

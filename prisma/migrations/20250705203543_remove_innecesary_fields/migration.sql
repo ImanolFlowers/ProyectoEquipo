@@ -8,7 +8,7 @@
 
 */
 -- AlterTable
-ALTER TABLE `temporada` DROP COLUMN `estado`,
+ALTER TABLE `Temporada` DROP COLUMN `estado`,
     DROP COLUMN `fin`,
     DROP COLUMN `inicio`,
     ADD COLUMN `activa` BOOLEAN NOT NULL DEFAULT true,
