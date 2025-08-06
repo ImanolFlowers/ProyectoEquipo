@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { TemporadasService } from '../../temporadas.service';
 import { CreateTemporadaDto } from '../../application/dtos/create-temporada.dto';
 import { UpdateTemporadaDto } from '../../application/dtos/update-temporada.dto';
 import { CreateTemporadaUseCase } from '../../application/use-cases/create-temporada.use-case';
