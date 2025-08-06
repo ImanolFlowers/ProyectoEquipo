@@ -5,9 +5,9 @@ import { CreateTemporadaUseCase } from '../../application/use-cases/create-tempo
 import { GetTemporadasUseCase } from '../../application/use-cases/get-temporadas.use-case';
 import { UpdateTemporadaUseCase } from '../../application/use-cases/update-temporada.use-case';
 import { DeleteTemporadaUseCase } from '../../application/use-cases/delete-temporada.use-case';
-import { Roles } from 'src/core/decorators/roles.decorator';
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/core/guards/roles.guard';
+import { Roles } from '../../../../core/decorators/roles.decorator';
+import { JwtAuthGuard } from '../../../../modules/auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../../../core/guards/roles.guard';
 
 
 

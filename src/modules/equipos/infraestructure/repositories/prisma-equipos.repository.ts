@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/core/databases/prisma.service';
+import { PrismaService } from '../../../../core/databases/prisma.service';
 import { EquipoRepository } from '../../domain/interfaces/equipos-repository.interface';
 import { Equipo } from '../../domain/entities/equipos.entity';
 import { EquipoMapper } from '../mappers/equipos.mapper';

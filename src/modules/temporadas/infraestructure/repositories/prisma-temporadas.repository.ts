@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/core/databases/prisma.service';
+import { PrismaService } from '../../../../core/databases/prisma.service';
 import { CreateTemporadaDto } from '../../application/dtos/create-temporada.dto';
 import { UpdateTemporadaDto } from '../../application/dtos/update-temporada.dto';
 

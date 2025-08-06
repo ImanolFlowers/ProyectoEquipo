@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from 'src/core/databases/prisma.service';
+import { PrismaService } from '../../core/databases/prisma.service';
 import { EquipoPrismaRepository } from './infraestructure/repositories/prisma-equipos.repository';
 import { CreateEquipoUseCase } from './application/use-cases/create-equipos.use-case';
 import { UpdateEquipoUseCase } from './application/use-cases/update-equipos.use-case';

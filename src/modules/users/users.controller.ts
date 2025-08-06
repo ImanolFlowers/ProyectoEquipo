@@ -2,8 +2,8 @@ import { Controller, Patch, Body, Param, UseGuards, Request, UnauthorizedExcepti
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/core/guards/roles.guard';
-import { Roles } from 'src/core/decorators/roles.decorator';
+import { RolesGuard } from '../../core/guards/roles.guard';
+import { Roles } from '../../core/decorators/roles.decorator';
 import { Role } from './dto/create-user.dto';
 
 

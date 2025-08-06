@@ -1,8 +1,8 @@
 import {Controller, Post, Body, UseGuards, Request, Get, Put, Param, Delete} from '@nestjs/common';
 import { CreateEquipoUseCase } from '../../application/use-cases/create-equipos.use-case';
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/core/guards/roles.guard';
-import { Roles } from 'src/core/decorators/roles.decorator';
+import { JwtAuthGuard } from '../../../../modules/auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../../../core/guards/roles.guard';
+import { Roles } from '../../../../core/decorators/roles.decorator';
 import { CreateEquipoDto } from '../../application/dtos/create-equipos.dto';
 import { GetEquiposUseCase } from '../../application/use-cases/get-equipos.use-case';
 import { UpdateEquipoUseCase } from '../../application/use-cases/update-equipos.use-case';

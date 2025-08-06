@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from 'src/core/databases/prisma.service';
+import { PrismaService } from '../../core/databases/prisma.service';
 import { TemporadasController } from './infraestructure/controllers/temporadas.controller';
 import { TemporadasRepository } from './infraestructure/repositories/prisma-temporadas.repository';
 import { CreateTemporadaUseCase } from './application/use-cases/create-temporada.use-case';
