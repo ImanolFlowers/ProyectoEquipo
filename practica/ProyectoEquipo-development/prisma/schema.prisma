@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum Role {
+  ARBITRO
+  ENTRENADOR
+  VISITANTE
+}
+
+
+model User {
+  id       String  @id @default(cuid())
+  name     String
+  username String    @unique(map: "User_username_key")
+  email    String    @unique(map: "User_email_key")
+  image    String?
+  password String
+  active   Boolean   @default(true)
+  createAt DateTime  @default(now())
+  updateAt DateTime?
+  telefono String?
+  apellido String?
+  role     Role @default(VISITANTE)
+
+    equipos  Equipo[] 
+}
+
+model Temporada {
+  id        String   @id @default(cuid())
+  nombre    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+  activa    Boolean  @default(true)
+}
+
+
+model Equipo {
+  id           String   @id @default(cuid())
+  nombre       String
+  escudo       String?
+  localidad    String?
+  entrenadorId String
+  entrenador   User     @relation(fields: [entrenadorId], references: [id], onDelete: Cascade)
+
+
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime?
+
+  // jugadores Jugadores[]
+}
+
+
+// enum Posicion {
+//   PORTERO
+//   DEFENSA
+//   MEDIO
+//   DELANTERO
+// }
+
+// model Jugadores {
+//   id         String    @id @default(cuid())
+//   nombre     String
+//   apellidos  String
+//   numero     Int
+//   posicion   Posicion
+//   foto       String?
+
+//   equipo     Equipo    @relation(fields: [equipoId], references: [id])
+//   equipoId   String
+
+//   createdAt  DateTime  @default(now())
+//   updatedAt  DateTime  @updatedAt
+// }

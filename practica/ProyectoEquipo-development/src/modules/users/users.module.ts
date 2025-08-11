@@ -1,0 +1,12 @@
+import { Module } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { UsersController } from './users.controller';
+import { PrismaService } from '../../core/databases/prisma.service';
+
+@Module({
+  //imprtacion del modulo prisma que permite buscar usuarios
+  providers: [PrismaService, UsersService],
+  exports: [UsersService],
+  controllers: [UsersController], 
+})
+export class UsersModule {}
