@@ -11,6 +11,7 @@ import { DeleteTemporadaUseCase } from '../../application/use-cases/delete-tempo
 
 describe('TemporadasController', () => {
   let controller: TemporadasController;
+  let temporadasGetUseCase: GetTemporadasUseCase;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,9 +27,19 @@ describe('TemporadasController', () => {
     }).compile();
 
     controller = module.get<TemporadasController>(TemporadasController);
+    temporadasGetUseCase = module.get<GetTemporadasUseCase>(GetTemporadasUseCase)
   });
 
-  it('should be defined', () => {
+  it('El controlador debe tener unainstancia', () => {
     expect(controller).toBeDefined();
   });
+
+  it('EL temporadasGetUseCase debe tener una instancia del caso de uso', () => {
+    expect(temporadasGetUseCase).toBeDefined;
+  });
+
+  it('EL temporadasGetUseCase debe tener el metodo execute()', () => {
+    expect(temporadasGetUseCase.execute).toBeDefined;
+  });
+  
 });

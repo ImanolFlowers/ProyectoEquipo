@@ -5,21 +5,32 @@ import { UsersService } from './users.service';
 
 describe('UsersController', () => {
   let controller: UsersController;
+  let service: UsersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-
       providers: [PrismaService, UsersService],
         exports: [UsersService],
-        controllers: [UsersController],
-
-
+      controllers: [UsersController],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
+    service = module.get<UsersService>(UsersService);
   });
 
-  it('should be defined', () => {
+  it('El controlador debe tener instancias', () => {
     expect(controller).toBeDefined();
   });
+
+  it('El user debe tener una instancia', () => {
+    expect(service).toBeDefined();
+  });
+
+  it('El service debe tener el metodo createUser para crear', () => {
+    expect(service.createUser).toBeDefined();
+  });
+
+  it('El service debe tener el metodo deleteUser para eliminar', () => {
+    expect(service.deleteUser).toBeDefined();
+  })
 });

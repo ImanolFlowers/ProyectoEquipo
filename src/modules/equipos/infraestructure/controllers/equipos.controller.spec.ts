@@ -10,13 +10,13 @@ import { DeleteEquipoUseCase } from '../../application/use-cases/delete-equipos.
 
 describe('EquiposController', () => {
   let controller: EquiposController;
+  let equiposGet: GetEquiposUseCase;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-
-
       controllers: [EquiposController],
-        providers: [
+
+      providers: [
           PrismaService,
           EquipoPrismaRepository,
           { provide: EQUIPO_REPOSITORY, useClass: EquipoPrismaRepository },
@@ -25,14 +25,22 @@ describe('EquiposController', () => {
           UpdateEquipoUseCase,
           DeleteEquipoUseCase,
         ],
-
-
     }).compile();
 
     controller = module.get<EquiposController>(EquiposController);
+    equiposGet = module.get<GetEquiposUseCase>(GetEquiposUseCase);
+
   });
 
-  it('should be defined', () => {
+  it('El controlador debe tener una instancia', () => {
     expect(controller).toBeDefined();
   });
+
+  it('El equiposGet debe tener una instancia en el caso de usos', () => {
+    expect(equiposGet).toBeDefined();
+  });
+
+  it('El equiposGet debe tene un metodo excecute', () => {
+    expect(equiposGet.execute).toBeDefined();
+  })
 });
