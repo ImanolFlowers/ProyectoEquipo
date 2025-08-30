@@ -19,8 +19,8 @@ describe('Autenticación y perfil (e2e)', () => {
     const loginResponse = await request(app.getHttpServer())
       .post('/auth/login')
       .send({
-        username: 'IMA',    
-        password: 'ima',
+        username: 'DANI',    
+        password: 'dani',
       })
       .expect(200);
 
@@ -37,7 +37,7 @@ describe('Autenticación y perfil (e2e)', () => {
 
     console.log('Datos perfil:', res.body);
 
-    expect(res.body.username).toEqual('IMA');  
+    expect(res.body.username).toEqual('DANI');  
   });
 
   afterAll(async () => {

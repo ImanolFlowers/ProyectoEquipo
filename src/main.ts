@@ -13,13 +13,13 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
-    const document = SwaggerModule.createDocument(app,config);
+  const document = SwaggerModule.createDocument(app,config);
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // elimina propiedades que no están en los DTOs
-      forbidNonWhitelisted: true, // lanza error si mandan propiedades no permitidas
+      whitelist: true, // elimina propiedades que no están en los dtos
+      forbidNonWhitelisted: false, // lanza error si mandan propiedades no permitidas
       transform: true, // transforma tipos (por ejemplo string a number)
     }),
   );

@@ -7,13 +7,14 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { TemporadasModule } from './modules/temporadas/temporadas.module';
 import { EquiposModule } from './modules/equipos/equipos.module';
+import { EnfrentamientosModule } from './modules/partidos/partidos.module';
 
 
 
 
 // Actualizacion
 @Module({
-  imports: [AuthModule, UsersModule, TemporadasModule, EquiposModule],
+  imports: [AuthModule, UsersModule, TemporadasModule, EquiposModule, EnfrentamientosModule],
   controllers: [AppController],
   providers: [
     AppService,

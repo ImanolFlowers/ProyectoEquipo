@@ -1,10 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-
+import { Prisma, User } from '../../../generated/prisma';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { PrismaService } from '../../core/databases/prisma.service';
-import { Prisma, User } from '../../../generated/prisma';
 
 
 @Injectable()
@@ -37,7 +36,7 @@ async createUser(userData: CreateUserDto) {
   });
 
   if (existingUsername) {
-    throw new BadRequestException('El nombre de usuario ya está en uso');
+    throw new BadRequestException('El nombre de usuario ya existe elija otro');
   }
 
   const existingEmail = await this.prismaService.user.findUnique({
@@ -106,7 +105,7 @@ async updateUser(userId: string, updateData: UpdateUserDto) {
       },
     });
 
-    return 'Se actualizó correctamente';
+    return 'Se actualizó correctamente el usuario';
   } catch (error) {
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -129,10 +128,17 @@ async updateUser(userId: string, updateData: UpdateUserDto) {
   }
 
   async deleteUser(id: string) {
-    await this.prismaService.user.delete({
-      where: { id },
-    });
+  // Eliminar equipos relacionados
+  await this.prismaService.equipo.deleteMany({
+    where: { entrenadorId: id },
+  });
 
-    return 'Eliminación exitosa';
-  }
+  // Luego eliminar usuario
+  await this.prismaService.user.delete({
+    where: { id },
+  });
+
+  return 'Eliminación exitosa del usuario';
+}
+
 }

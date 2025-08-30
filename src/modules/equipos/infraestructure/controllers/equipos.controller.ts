@@ -1,4 +1,4 @@
-import {Controller, Post, Body, UseGuards, Request, Get, Put, Param, Delete} from '@nestjs/common';
+import {Controller, Post, Body, UseGuards, Request, Get, Put, Param, Delete, HttpCode, HttpStatus} from '@nestjs/common';
 import { CreateEquipoUseCase } from '../../application/use-cases/create-equipos.use-case';
 import { JwtAuthGuard } from '../../../../modules/auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../../core/guards/roles.guard';
@@ -8,7 +8,12 @@ import { GetEquiposUseCase } from '../../application/use-cases/get-equipos.use-c
 import { UpdateEquipoUseCase } from '../../application/use-cases/update-equipos.use-case';
 import { DeleteEquipoUseCase } from '../../application/use-cases/delete-equipos.use-case';
 import { UpdateEquipoDto } from '../../application/dtos/update-equipos.dto';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Equipo } from '../../domain/entities/equipos.entity';
 
+
+@ApiBearerAuth()
+@ApiTags('Equipos')
 @Controller('equipos')
 export class EquiposController {
   constructor(
@@ -18,6 +23,10 @@ export class EquiposController {
     private readonly deleteUC: DeleteEquipoUseCase,
   ) {}
 
+  // agregar
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({summary: "Agregar un equipo"})
+  @ApiCreatedResponse({type: Equipo})
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   //@Roles('ENTRENADOR')
@@ -25,6 +34,9 @@ export class EquiposController {
     return this.createUC.execute(dto, req.user.userId, req.user.role);
   }
 
+  // Visualizar
+  @ApiOperation({summary: "Lista de equipos"})
+  @ApiOkResponse({type: Equipo})
   @Get()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ARBITRO', 'ENTRENADOR')
@@ -33,6 +45,9 @@ export class EquiposController {
     return this.getUC.execute(req.user.userId);
   }
 
+  //Actualizar
+  @ApiOperation({summary: "Modificación de equipos"})
+  @ApiOkResponse({type: Equipo})
   @Put(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ENTRENADOR', 'ARBITRO')
@@ -41,6 +56,8 @@ export class EquiposController {
     return this.updateUC.execute(id, dto, req.user.userId);
   }
 
+  @ApiOperation({summary: "Eliminación de equipos"})
+  @ApiOkResponse({type: Equipo})
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ENTRENADOR', 'ARBITRO')

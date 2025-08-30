@@ -2,15 +2,21 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nes
 import { CreateTemporadaDto } from '../../application/dtos/create-temporada.dto';
 import { UpdateTemporadaDto } from '../../application/dtos/update-temporada.dto';
 import { CreateTemporadaUseCase } from '../../application/use-cases/create-temporada.use-case';
-import { GetTemporadasUseCase } from '../../application/use-cases/get-temporadas.use-case';
+
 import { UpdateTemporadaUseCase } from '../../application/use-cases/update-temporada.use-case';
-import { DeleteTemporadaUseCase } from '../../application/use-cases/delete-temporada.use-case';
-import { Roles } from '../../../../core/decorators/roles.decorator';
+
+
 import { JwtAuthGuard } from '../../../../modules/auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../../core/guards/roles.guard';
+import { Roles } from '../../../../core/decorators/roles.decorator';
+import { DeleteTemporadaUseCase } from '../../application/use-cases/delete-temporada.use-case';
+import { GetTemporadasUseCase } from '../../application/use-cases/get-temporadas.use-case';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { temporadaPost } from '../../domain/entities/temporadas-entity';
 
 
-
+@ApiBearerAuth()
+@ApiTags('Temporadas')
 @Controller('temporadas')
 export class TemporadasController {
   constructor(
@@ -23,6 +29,8 @@ export class TemporadasController {
 
 //   en este caso el controler es manejado por el arbitro, quien crea las temporadas o hace peticiones
 //   usando el token para que no haya problemas y otro usuario que no sea admin pueda modificar temporadas
+    @ApiOperation({summary: "Creación de temporadas"})
+    @ApiOkResponse({type: temporadaPost})
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles('ARBITRO')
     @Post()
@@ -30,13 +38,16 @@ export class TemporadasController {
         return this.createUC.execute(dto);
     }
     
+    @ApiOperation({summary: "Lista de temporadas"})
     @Roles('ARBITRO')
     @Get()
     async findAll() {
         return this.getUC.execute();
-
-
     }
+
+
+    @ApiOperation({summary: "Modificacion de nombres de temporadas"})
+    @ApiOkResponse({type: temporadaPost})
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles('ARBITRO')
     @Put(':id')
@@ -44,6 +55,8 @@ export class TemporadasController {
         return this.updateUC.execute(id, dto);
     }
 
+
+    @ApiOperation({summary: "Eliminación de Temporadas"})
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles('ARBITRO')
     @Delete(':id')

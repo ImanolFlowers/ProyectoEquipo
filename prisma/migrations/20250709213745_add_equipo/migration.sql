@@ -13,4 +13,4 @@ CREATE TABLE `Equipo` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Equipo` ADD CONSTRAINT `Equipo_entrenadorId_fkey` FOREIGN KEY (`entrenadorId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Equipo` ADD CONSTRAINT `Equipo_entrenadorId_fkey` FOREIGN KEY (`entrenadorId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

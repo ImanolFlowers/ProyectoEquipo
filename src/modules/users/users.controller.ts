@@ -5,19 +5,27 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../core/guards/roles.guard';
 import { Roles } from '../../core/decorators/roles.decorator';
 import { Role } from './dto/create-user.dto';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UsuarioUpdate } from './responsive/usuarioUpdate-response';
 
 
-
+@ApiBearerAuth()
+@ApiTags('Usuarios')
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  
+  @ApiOperation({summary: "Visualizacion de usuarios"})
   @Get()
   async getAllUsers() {
     return this.usersService.findAll();
   }
 
+
+  @ApiOperation({summary: "Modificación de usuarios"})
+  @ApiOkResponse({type: UsuarioUpdate})
   @Put(':id')
   @Roles('ARBITRO', 'ENTRENADOR')
   async updateUser(
@@ -39,6 +47,8 @@ export class UsersController {
     return this.usersService.updateUser(id, updateUserDto);
   }
 
+
+  @ApiOperation({summary: "Eliminacion de usuarios"})
  @UseGuards(JwtAuthGuard, RolesGuard)
 @Delete(':id')
 async deleteUser(

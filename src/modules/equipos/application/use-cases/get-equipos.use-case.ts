@@ -3,6 +3,7 @@ import { EquipoRepository } from '../../domain/interfaces/equipos-repository.int
 import { EQUIPO_REPOSITORY } from '../../domain/constants';
 import { EquipoConEntrenadorDto } from '../dtos/equipo-con-entrenador.dto';
 
+
 @Injectable()
 export class GetEquiposUseCase {
   constructor(

@@ -5,8 +5,10 @@ import { TemporadasRepository } from './infraestructure/repositories/prisma-temp
 import { CreateTemporadaUseCase } from './application/use-cases/create-temporada.use-case';
 import { GetTemporadasUseCase } from './application/use-cases/get-temporadas.use-case';
 import { UpdateTemporadaUseCase } from './application/use-cases/update-temporada.use-case';
-import { DeleteTemporadaUseCase } from './application/use-cases/delete-temporada.use-case';
+
 import { ITemporadasRepository } from './domain/interfaces/temporada-repository.interface';
+import { DeleteTemporadaUseCase } from './application/use-cases/delete-temporada.use-case';
+
 
 @Module({
   controllers: [TemporadasController],

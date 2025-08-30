@@ -1,0 +1,52 @@
+// import { INestApplication } from '@nestjs/common';
+// import { Test, TestingModule } from '@nestjs/testing';
+// import * as request from 'supertest';
+// import { AppModule } from '../src/app.module';
+
+// describe('Equipos (e2e)', () => {
+//   let app: INestApplication;
+//   let token: string;
+
+//   beforeAll(async () => {
+//     const moduleFixture: TestingModule = await Test.createTestingModule({
+//       imports: [AppModule],
+//     }).compile();
+
+//     app = moduleFixture.createNestApplication();
+//     await app.init();
+
+//     const loginResponse = await request(app.getHttpServer())
+//       .post('/auth/login')
+//       .send({
+//         username: 'DANI',
+//         password: 'dani',
+//       })
+//       .expect(200);
+
+//     token = loginResponse.body.access_token;
+//   });
+
+//   it('/equipos (POST) - crear un equipo', async () => {
+//     const nuevoEquipo = { nombre: 'Estrellas', localidad: 'Ayutla' };
+//     const res = await request(app.getHttpServer())
+//       .post('/equipos')
+//       .set('Authorization', `Bearer ${token}`)
+//       .send(nuevoEquipo)
+//       .expect(201);
+
+//     console.log('RESPUESTA POST /equipos:', res.body);
+//   });
+
+//   it('/equipos (GET) - obtener equipos del usuario', async () => {
+//     const res = await request(app.getHttpServer())
+//       .get('/equipos')
+//       .set('Authorization', `Bearer ${token}`)
+//       .expect(200);
+
+//     console.log('RESPUESTA GET /equipos:', res.body);
+//   });
+
+//   afterAll(async () => {
+//     await app.close();
+//   });
+// });
