@@ -15,6 +15,18 @@ enum Role {
   VISITANTE
 }
 
+enum EstadoTemporada {
+  ACTIVA
+  FINALIZADA
+}
+
+// enum Posicion {
+//   PORTERO
+//   DEFENSA
+//   MEDIO
+//   DELANTERO
+// }
+
 
 model User {
   id       String  @id @default(cuid())
@@ -34,11 +46,11 @@ model User {
 }
 
 model Temporada {
-  id        String   @id @default(cuid())
+  id        String          @id @default(cuid())
   nombre    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt 
-  activa    Boolean  @default(true)
+  estado    EstadoTemporada @default(ACTIVA)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 }
 
 
@@ -55,26 +67,24 @@ model Equipo {
   createdAt    DateTime @default(now())
   updatedAt    DateTime?
 
-  // jugadores Jugadores[]
+  // jugador Jugador[]
 }
 
 
-// enum Posicion {
-//   PORTERO
-//   DEFENSA
-//   MEDIO
-//   DELANTERO
-// }
 
-// model Jugadores {
+
+
+// model Jugador {
 //   id         String    @id @default(cuid())
 //   nombre     String
 //   apellidos  String
 //   numero     Int
 //   posicion   Posicion
+//   posicionDetalle String?
+
 //   foto       String?
 
-//   equipo     Equipo    @relation(fields: [equipoId], references: [id])
+//   equipo     Equipo    @relation(fields: [equipoId], references: [id], onDelete: Cascade)
 //   equipoId   String
 
 //   createdAt  DateTime  @default(now())

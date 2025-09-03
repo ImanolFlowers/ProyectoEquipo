@@ -141,4 +141,30 @@ async updateUser(userId: string, updateData: UpdateUserDto) {
   return 'Eliminación exitosa del usuario';
 }
 
+
+// esto podria desactivarlo
+//pero es para que el usuario propio al eliminar su cuenta, le vuelva a pedir su contraseña
+async deleteUserWithPassword(userId: string, password: string) {
+  const user = await this.prismaService.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) throw new NotFoundException('Usuario no encontrado');
+
+  const passwordValid = await bcrypt.compare(password, user.password);
+  if (!passwordValid) {
+    throw new BadRequestException('Contraseña incorrecta');
+  }
+
+  // elimina los equipos que tiene el entrenador
+  await this.prismaService.equipo.deleteMany({
+    where: { entrenadorId: userId },
+  });
+
+  await this.prismaService.user.delete({
+    where: { id: userId },
+  });
+  return 'Tu cuenta y equipos han sido eliminados correctamente';
+}
+
 }

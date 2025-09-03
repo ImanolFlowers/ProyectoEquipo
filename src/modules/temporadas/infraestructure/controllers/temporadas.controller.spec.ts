@@ -8,6 +8,7 @@ import { PrismaService } from '../../../../core/databases/prisma.service';
 import { ITemporadasRepository } from '../../domain/interfaces/temporada-repository.interface';
 import { TemporadasRepository } from '../repositories/prisma-temporadas.repository';
 import { DeleteTemporadaUseCase } from '../../application/use-cases/delete-temporada.use-case';
+import { FinalizarTemporadaUseCase } from '../../application/use-cases/finalizar-temporada.use-case';
 
 describe('TemporadasController', () => {
   let controller: TemporadasController;
@@ -23,6 +24,7 @@ describe('TemporadasController', () => {
         GetTemporadasUseCase,
         UpdateTemporadaUseCase,
         DeleteTemporadaUseCase,
+        FinalizarTemporadaUseCase
       ],
     }).compile();
 

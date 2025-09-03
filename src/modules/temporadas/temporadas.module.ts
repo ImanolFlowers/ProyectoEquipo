@@ -8,6 +8,7 @@ import { UpdateTemporadaUseCase } from './application/use-cases/update-temporada
 
 import { ITemporadasRepository } from './domain/interfaces/temporada-repository.interface';
 import { DeleteTemporadaUseCase } from './application/use-cases/delete-temporada.use-case';
+import { FinalizarTemporadaUseCase } from './application/use-cases/finalizar-temporada.use-case';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { DeleteTemporadaUseCase } from './application/use-cases/delete-temporada
     GetTemporadasUseCase,
     UpdateTemporadaUseCase,
     DeleteTemporadaUseCase,
+    FinalizarTemporadaUseCase
   ],
 })
 export class TemporadasModule {}

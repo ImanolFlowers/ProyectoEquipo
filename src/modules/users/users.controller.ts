@@ -48,25 +48,53 @@ export class UsersController {
   }
 
 
-  @ApiOperation({summary: "Eliminacion de usuarios"})
- @UseGuards(JwtAuthGuard, RolesGuard)
-@Delete(':id')
-async deleteUser(
-  @Param('id') id: string,
-  @Request() req,
-) {
-  const usuarioActual = req.user;
+  // eliminacion de cuenta pidiendo contraseña para los entrenadores
+  @ApiOperation({ summary: "Eliminación de usuarios" })
+  @Delete(':id')
+  async deleteUser(
+    @Param('id') id: string,
+    @Request() req,
+    @Body() body: { password?: string }, // la contraseña se envía solo si es el propio usuario
+  ) {
+    const usuarioActual = req.user;
 
-  // Si es árbitro, puede eliminar a cualquiera
-  if (usuarioActual.role === Role.ARBITRO) {
-    return this.usersService.deleteUser(id);
+    if (usuarioActual.role === Role.ARBITRO) {
+      return this.usersService.deleteUser(id);
+    }
+
+    if (usuarioActual.userId !== id) {
+      throw new ForbiddenException('No tienes permiso para eliminar a otros usuarios');
+    }
+
+    if (!body.password) {
+      throw new UnauthorizedException('Debes confirmar tu contraseña para eliminar tu cuenta');
+    }
+
+    return this.usersService.deleteUserWithPassword(id, body.password);
   }
 
-  // Si no es árbitro, solo puede eliminar su propia cuenta
-  if (usuarioActual.userId !== id) {
-    throw new ForbiddenException('No tienes permiso para eliminar a otros usuarios');
-  }
 
-  return this.usersService.deleteUser(id);
-}
+//por si ya no se decea pedir contraseña al eliminar cuenta de entrenador
+
+//   @ApiOperation({summary: "Eliminacion de usuarios"})
+//  @UseGuards(JwtAuthGuard, RolesGuard)
+// @Delete(':id')
+// async deleteUser(
+//   @Param('id') id: string,
+//   @Request() req,
+// ) {
+//   const usuarioActual = req.user;
+
+//   // Si es árbitro, puede eliminar a cualquiera
+//   if (usuarioActual.role === Role.ARBITRO) {
+//     return this.usersService.deleteUser(id);
+//   }
+
+//   // Si no es árbitro, solo puede eliminar su propia cuenta
+//   if (usuarioActual.userId !== id) {
+//     throw new ForbiddenException('No tienes permiso para eliminar a otros usuarios');
+//   }
+
+//   return this.usersService.deleteUser(id);
+// }
 }

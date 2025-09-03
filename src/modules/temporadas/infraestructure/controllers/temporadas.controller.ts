@@ -13,6 +13,7 @@ import { DeleteTemporadaUseCase } from '../../application/use-cases/delete-tempo
 import { GetTemporadasUseCase } from '../../application/use-cases/get-temporadas.use-case';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { temporadaPost } from '../../domain/entities/temporadas-entity';
+import { FinalizarTemporadaUseCase } from '../../application/use-cases/finalizar-temporada.use-case';
 
 
 @ApiBearerAuth()
@@ -24,6 +25,7 @@ export class TemporadasController {
     private readonly getUC:    GetTemporadasUseCase,
     private readonly updateUC: UpdateTemporadaUseCase,
     private readonly deleteUC: DeleteTemporadaUseCase,
+     private readonly finalizarUC: FinalizarTemporadaUseCase,
   ) {}
   
 
@@ -37,6 +39,8 @@ export class TemporadasController {
     async create(@Body() dto: CreateTemporadaDto) {
         return this.createUC.execute(dto);
     }
+
+    
     
     @ApiOperation({summary: "Lista de temporadas"})
     @Roles('ARBITRO')
@@ -53,6 +57,13 @@ export class TemporadasController {
     @Put(':id')
     async update(@Param('id') id: string, @Body() dto: UpdateTemporadaDto) {
         return this.updateUC.execute(id, dto);
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('ARBITRO')
+    @Put('finalizar/:id')
+    async finalizar(@Param('id') id: string) {
+        return this.finalizarUC.execute(id);
     }
 
 
