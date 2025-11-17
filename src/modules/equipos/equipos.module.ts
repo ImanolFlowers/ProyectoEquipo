@@ -19,5 +19,6 @@ import { EQUIPO_REPOSITORY } from './domain/constants';
     UpdateEquipoUseCase,
     DeleteEquipoUseCase,
   ],
+    exports: [EQUIPO_REPOSITORY], 
 })
 export class EquiposModule {}

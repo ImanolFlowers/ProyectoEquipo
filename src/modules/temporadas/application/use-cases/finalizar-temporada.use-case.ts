@@ -12,10 +12,9 @@ export class FinalizarTemporadaUseCase {
     if (!temporada) throw new BadRequestException(`No existe la temporada con id "${id}"`);
 
     // finaliza la temporada en la entidad
-    // esto pone activa = false
     temporada.finalizar(); 
 
-    // Actualizar en la base de datos utilizando el mapper
+    // actualiza en la base de datos utilizando el mapper
     return this.repo.update(id, { estado: 'FINALIZADA' } as any);
   }
 }

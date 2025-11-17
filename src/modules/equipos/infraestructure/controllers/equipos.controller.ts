@@ -10,6 +10,7 @@ import { DeleteEquipoUseCase } from '../../application/use-cases/delete-equipos.
 import { UpdateEquipoDto } from '../../application/dtos/update-equipos.dto';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Equipo } from '../../domain/entities/equipos.entity';
+import { Public } from 'src/core/decorators/public.decorator';
 
 
 @ApiBearerAuth()
@@ -35,15 +36,21 @@ export class EquiposController {
   }
 
   // Visualizar
+  // EN ESTE CASO SOLO MODIFIQUE LA VISUALIZACION PARA QUE SEA EN PUBLICO 
+  // ASI NO TENGO QUE PEDIR LA AUTENTICACION 
+  @Public()
   @ApiOperation({summary: "Lista de equipos"})
   @ApiOkResponse({type: Equipo})
   @Get()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ARBITRO', 'ENTRENADOR')
-  async getAll(@Request() req) {
-    if (req.user.role === 'ARBITRO') return this.getUC.getAllEquipos();
-    return this.getUC.execute(req.user.userId);
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles('ARBITRO', 'ENTRENADOR')
+  async getAll(){
+    return this.getUC.getAllEquipos();
   }
+  // async getAll(@Request() req) {
+  //   if (req.user.role === 'ARBITRO') return this.getUC.getAllEquipos();
+  //   return this.getUC.execute(req.user.userId);
+  // }
 
   //Actualizar
   @ApiOperation({summary: "Modificación de equipos"})
@@ -56,6 +63,7 @@ export class EquiposController {
     return this.updateUC.execute(id, dto, req.user.userId);
   }
 
+  //ELIMINAR EL EQUIPO
   @ApiOperation({summary: "Eliminación de equipos"})
   @ApiOkResponse({type: Equipo})
   @Delete(':id')

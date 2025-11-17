@@ -16,7 +16,7 @@ export class GetEquiposUseCase {
     return this.equipoRepository.findAllByEntrenador(entrenadorId);
   }
 
- 
+
   async getAllEquipos(): Promise<EquipoConEntrenadorDto[]> {
     return this.equipoRepository.findAll();
   }

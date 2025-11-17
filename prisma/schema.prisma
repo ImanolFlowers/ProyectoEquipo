@@ -20,13 +20,19 @@ enum EstadoTemporada {
   FINALIZADA
 }
 
-// enum Posicion {
-//   PORTERO
-//   DEFENSA
-//   MEDIO
-//   DELANTERO
-// }
+enum Posicion {
+  PORTERO
+  DEFENSA
+  MEDIO
+  DELANTERO
+}
 
+enum EstadoPartido {
+  FUTURO
+  EN_JUEGO
+  FINALIZADO
+  CANCELADO
+}
 
 model User {
   id       String  @id @default(cuid())
@@ -47,11 +53,13 @@ model User {
 
 model Temporada {
   id        String          @id @default(cuid())
-  nombre    String
   estado    EstadoTemporada @default(ACTIVA)
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
+
+  partido Partido[]
 }
+
 
 
 model Equipo {
@@ -67,26 +75,78 @@ model Equipo {
   createdAt    DateTime @default(now())
   updatedAt    DateTime?
 
-  // jugador Jugador[]
+  jugador Jugador[]
+
+  partidosA Partido[] @relation("EquipoA")
+  partidosB Partido[] @relation("EquipoB")
+
+
+  TablaGeneral TablaGeneral[]
 }
 
 
 
 
 
-// model Jugador {
-//   id         String    @id @default(cuid())
-//   nombre     String
-//   apellidos  String
-//   numero     Int
-//   posicion   Posicion
-//   posicionDetalle String?
+model Jugador {
+  id         String    @id @default(cuid())
+  nombre     String
+  apellidos  String
+  numero     Int
+  posicion   Posicion
+  posicionDetalle String?
 
-//   foto       String?
+  foto       String?
 
-//   equipo     Equipo    @relation(fields: [equipoId], references: [id], onDelete: Cascade)
-//   equipoId   String
+  equipo     Equipo    @relation(fields: [equipoId], references: [id], onDelete: Cascade)
+  equipoId   String
 
-//   createdAt  DateTime  @default(now())
-//   updatedAt  DateTime  @updatedAt
-// }
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+
+model Partido {
+  id            String         @id @default(cuid())
+  // esto serian los datos para crear un partido
+  fechaHora     DateTime
+  lugar         String
+  //esepto el estado, iniciara como FUTURO 
+  estado        EstadoPartido  @default(FUTURO)
+  jornada       Int
+ //lo que es la temporada, y los equipos, esos solo se les agregaria la id existente
+  temporada     Temporada      @relation(fields: [temporadaId], references: [id])
+  temporadaId   String
+
+  equipoA       Equipo         @relation("EquipoA", fields: [equipoAId], references: [id])
+  equipoAId     String
+
+  equipoB       Equipo         @relation("EquipoB", fields: [equipoBId], references: [id])
+  equipoBId     String
+
+//los goles ya seria pura actualizacion 
+  golesEquipoA  Int            @default(0)
+  golesEquipoB  Int            @default(0)
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+
+model TablaGeneral {
+  id         String   @id @default(cuid())
+  num       Int       @default(0)
+  equipoId   String
+  PJ         Int      @default(0)
+  PG         Int      @default(0)
+  PE         Int      @default(0)
+  PP         Int      @default(0)
+  GF         Int      @default(0)
+  GC         Int      @default(0)
+  DIF        Int      @default(0)
+  Pts        Int      @default(0)
+
+  equipo     Equipo   @relation(fields: [equipoId], references: [id])
+
+  updatedAt  DateTime @updatedAt
+}

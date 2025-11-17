@@ -9,12 +9,15 @@ export abstract class ITemporadasRepository {
   // traer las temporadas creadas
   abstract findAll(): Promise<Temporada[]>;
 
-  // traer solo latemporada por su id
+  // traer solo la temporada por su id (para proximos modulos quyiza)
   abstract findById(id: string): Promise<Temporada | null>;
 
-  // Actualizacion de temporada ya sea su nombre o estado
+  // actualizacion de temporada ya sea su estado
   abstract update(id: string, dto: UpdateTemporadaDto): Promise<Temporada>;
 
-  // eliminacion de temporada
+  // esta hace la eliminacion de temporada
   abstract delete(id: string): Promise<void>;
+
+  // esta me trae la temporada activa
+  abstract findActive(): Promise<Temporada | null>;
 }

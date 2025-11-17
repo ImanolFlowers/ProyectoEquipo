@@ -20,14 +20,14 @@ import { FinalizarTemporadaUseCase } from '../../application/use-cases/finalizar
 @ApiTags('Temporadas')
 @Controller('temporadas')
 export class TemporadasController {
-  constructor(
+constructor(
     private readonly createUC: CreateTemporadaUseCase,
     private readonly getUC:    GetTemporadasUseCase,
     private readonly updateUC: UpdateTemporadaUseCase,
     private readonly deleteUC: DeleteTemporadaUseCase,
-     private readonly finalizarUC: FinalizarTemporadaUseCase,
-  ) {}
-  
+    private readonly finalizarUC: FinalizarTemporadaUseCase,
+) {}
+
 
 //   en este caso el controler es manejado por el arbitro, quien crea las temporadas o hace peticiones
 //   usando el token para que no haya problemas y otro usuario que no sea admin pueda modificar temporadas
